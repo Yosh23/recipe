@@ -5,3 +5,21 @@ type Cookbook {
   author: String!
   recipe: String!
 }
+
+type Ingredient {
+  id: ID! @unique
+  name: String!
+  kind: IngredientKind!
+  Substitute: String
+}
+enum IngredientKind {
+  SPICE
+  MEAT
+  VEGETABLE
+  FRUIT
+  GRAINS
+  DAIRY
+  BEANS
+  PASTA
+}
+
