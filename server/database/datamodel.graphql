@@ -6,6 +6,14 @@ type Cookbook {
   recipe: String!
 }
 
+type Recipe {
+  id: ID!
+  title: String!
+  author: String
+  Ingredients: String!
+  Directions: String!
+}
+
 type Ingredient {
   id: ID! @unique
   name: String!
