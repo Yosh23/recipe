@@ -7,18 +7,18 @@ type Cookbook {
 }
 
 type Recipe {
-  id: ID!
+  id: ID! @unique
   title: String!
   author: String
-  Ingredients: String!
-  Directions: String!
+  ingredients: String!
+  directions: String!
 }
 
 type Ingredient {
   id: ID! @unique
   name: String!
   kind: IngredientKind!
-  Substitute: String
+  substitute: String
 }
 enum IngredientKind {
   SPICE
@@ -31,3 +31,21 @@ enum IngredientKind {
   PASTA
 }
 
+
+type Post {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  isPublished: Boolean! @default(value: "false")
+  title: String!
+  text: String!
+  author: User!
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  posts: [Post!]!
+}
