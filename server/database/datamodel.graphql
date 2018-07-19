@@ -2,16 +2,16 @@ type Cookbook {
   id: ID! @unique
   title: String!
   desc: String!
-  author: String!
-  recipe: String!
+  author: User!
+  recipe: [Recipe!]!
 }
 
 type Recipe {
   id: ID! @unique
   title: String!
-  author: String
-  ingredients: String!
-  directions: String!
+  author: User!
+  ingredients: [Ingredient!]!
+  directions: [String!]!
 }
 
 type Ingredient {
@@ -20,6 +20,7 @@ type Ingredient {
   kind: IngredientKind!
   substitute: String
 }
+
 enum IngredientKind {
   SPICE
   MEAT
@@ -30,7 +31,6 @@ enum IngredientKind {
   BEANS
   PASTA
 }
-
 
 type Post {
   id: ID! @unique
