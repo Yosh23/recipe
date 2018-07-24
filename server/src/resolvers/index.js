@@ -1,14 +1,14 @@
-const { Query } = require('./Query')
+const { Cookbooks } = require('./Cookbooks')
 const { Subscription } = require('./Subscription')
 const { auth } = require('./Mutation/auth')
-const { post } = require('./Mutation/post')
+const { cudCookbook } = require('./Mutation/cudCookbook')
 const { AuthPayload } = require('./AuthPayload')
 
 module.exports = {
-  Query,
+  Cookbooks,
   Mutation: {
     ...auth,
-    ...post,
+    ...cudCookbook,
   },
   Subscription,
   AuthPayload,
