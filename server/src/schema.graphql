@@ -30,3 +30,6 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+
+#whenever I add a new notation in the resolvers or scheme I have to update the other
