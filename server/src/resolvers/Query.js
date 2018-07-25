@@ -23,7 +23,11 @@ const Query = {
   },
 
   shoppingList(parent, { id }, ctx, info) {
-    return ctx.db.query.shoppingList({ where: { id } }, info)
+    return ctx.db.query.shoppingList({where: {id}}, info)
+  },
+
+  recipe(parent, { id }, ctx, info) {
+    return ctx.db.query.recipe({ where: { id } }, info)
   },
 
   me(parent, args, ctx, info) {
