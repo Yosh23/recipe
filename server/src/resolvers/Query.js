@@ -22,6 +22,10 @@ const Query = {
     return ctx.db.query.post({ where: { id } }, info)
   },
 
+  shoppingList(parent, { id }, ctx, info) {
+    return ctx.db.query.shoppingList({ where: { id } }, info)
+  },
+
   me(parent, args, ctx, info) {
     const id = getUserId(ctx)
     return ctx.db.query.user({ where: { id } }, info)

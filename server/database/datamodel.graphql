@@ -49,3 +49,9 @@ type User {
   name: String!
   posts: [Post!]!
 }
+
+type ShoppingList {
+  id: ID! @unique
+  title: String!
+  ingredients: [String!]!
+}

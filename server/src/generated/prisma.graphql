@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/public-dawnduke-366/recipe/dev
-# timestamp: Thu Jul 19 2018 14:04:15 GMT-0600 (MDT)
+# timestamp: Tue Jul 24 2018 10:50:51 GMT-0600 (MDT)
 
 type AggregateCookbook {
   count: Int!
@@ -14,6 +14,10 @@ type AggregatePost {
 }
 
 type AggregateRecipe {
+  count: Int!
+}
+
+type AggregateShoppingList {
   count: Int!
 }
 
@@ -564,31 +568,37 @@ scalar Long
 type Mutation {
   createCookbook(data: CookbookCreateInput!): Cookbook!
   createPost(data: PostCreateInput!): Post!
+  createShoppingList(data: ShoppingListCreateInput!): ShoppingList!
   createUser(data: UserCreateInput!): User!
   createRecipe(data: RecipeCreateInput!): Recipe!
   createIngredient(data: IngredientCreateInput!): Ingredient!
   updateCookbook(data: CookbookUpdateInput!, where: CookbookWhereUniqueInput!): Cookbook
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateShoppingList(data: ShoppingListUpdateInput!, where: ShoppingListWhereUniqueInput!): ShoppingList
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
   updateIngredient(data: IngredientUpdateInput!, where: IngredientWhereUniqueInput!): Ingredient
   deleteCookbook(where: CookbookWhereUniqueInput!): Cookbook
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteShoppingList(where: ShoppingListWhereUniqueInput!): ShoppingList
   deleteUser(where: UserWhereUniqueInput!): User
   deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
   deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
   upsertCookbook(where: CookbookWhereUniqueInput!, create: CookbookCreateInput!, update: CookbookUpdateInput!): Cookbook!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertShoppingList(where: ShoppingListWhereUniqueInput!, create: ShoppingListCreateInput!, update: ShoppingListUpdateInput!): ShoppingList!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
   upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
   updateManyCookbooks(data: CookbookUpdateInput!, where: CookbookWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyShoppingLists(data: ShoppingListUpdateInput!, where: ShoppingListWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyRecipes(data: RecipeUpdateInput!, where: RecipeWhereInput): BatchPayload!
   updateManyIngredients(data: IngredientUpdateInput!, where: IngredientWhereInput): BatchPayload!
   deleteManyCookbooks(where: CookbookWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyShoppingLists(where: ShoppingListWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
   deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
@@ -951,16 +961,19 @@ input PostWhereUniqueInput {
 type Query {
   cookbooks(where: CookbookWhereInput, orderBy: CookbookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Cookbook]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  shoppingLists(where: ShoppingListWhereInput, orderBy: ShoppingListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ShoppingList]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
   cookbook(where: CookbookWhereUniqueInput!): Cookbook
   post(where: PostWhereUniqueInput!): Post
+  shoppingList(where: ShoppingListWhereUniqueInput!): ShoppingList
   user(where: UserWhereUniqueInput!): User
   recipe(where: RecipeWhereUniqueInput!): Recipe
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
   cookbooksConnection(where: CookbookWhereInput, orderBy: CookbookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CookbookConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  shoppingListsConnection(where: ShoppingListWhereInput, orderBy: ShoppingListOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShoppingListConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
   ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
@@ -1211,9 +1224,204 @@ input RecipeWhereUniqueInput {
   id: ID
 }
 
+type ShoppingList implements Node {
+  id: ID!
+  title: String!
+  ingredients: [String!]!
+}
+
+"""A connection to a list of items."""
+type ShoppingListConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ShoppingListEdge]!
+  aggregate: AggregateShoppingList!
+}
+
+input ShoppingListCreateingredientsInput {
+  set: [String!]
+}
+
+input ShoppingListCreateInput {
+  title: String!
+  ingredients: ShoppingListCreateingredientsInput
+}
+
+"""An edge in a connection."""
+type ShoppingListEdge {
+  """The item at the end of the edge."""
+  node: ShoppingList!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ShoppingListOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ShoppingListPreviousValues {
+  id: ID!
+  title: String!
+  ingredients: [String!]!
+}
+
+type ShoppingListSubscriptionPayload {
+  mutation: MutationType!
+  node: ShoppingList
+  updatedFields: [String!]
+  previousValues: ShoppingListPreviousValues
+}
+
+input ShoppingListSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShoppingListSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShoppingListSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShoppingListSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ShoppingListWhereInput
+}
+
+input ShoppingListUpdateingredientsInput {
+  set: [String!]
+}
+
+input ShoppingListUpdateInput {
+  title: String
+  ingredients: ShoppingListUpdateingredientsInput
+}
+
+input ShoppingListWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ShoppingListWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ShoppingListWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ShoppingListWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+}
+
+input ShoppingListWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   cookbook(where: CookbookSubscriptionWhereInput): CookbookSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  shoppingList(where: ShoppingListSubscriptionWhereInput): ShoppingListSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload

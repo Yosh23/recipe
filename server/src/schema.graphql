@@ -1,14 +1,19 @@
 # import Post from "./generated/prisma.graphql"
+# import ShoppingList from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
+  ShoppingList(id: ID!): Shoppinglist
   me: User
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
+  makeShoppingList(title: String!, ingredients: [String!]!): ShoppingList!
+  removeShoppingList(id: ID!): ShoppingList!
+  shareShoppingList(id: ID!): ShoppingList!
   login(email: String!, password: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
@@ -29,7 +34,7 @@ type User {
   email: String!
   name: String!
   posts: [Post!]!
+  ShoppingLists: [ShoppingList!]!
 }
-
 
 #whenever I add a new notation in the resolvers or scheme I have to update the other
