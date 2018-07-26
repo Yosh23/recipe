@@ -3,38 +3,8 @@ const { getUserId } = require('../../utils')
 const cookbook = {
   async createCookbook(parent, { title, desc }, ctx, info) {
     const userId = getUserId(ctx)
-    return ctx.db.mutation.createCookbook(
-      {
-        data: {
-          title,
-          desc,
-          isPublished: false,
-          author: {
-            connect: { id: userId },
-          },
-        },
-      },
-      info
-    )
+    return ctx.db.mutation.createCookbook({data: { title, desc }}, info)
   },
-  
-  const recipe = {
-    async createRecipe(parent, { title, desc }, ctx, info) {
-      const userId = getUserId(ctx)
-      return ctx.db.mutation.createCookbook(
-        {
-          data: {
-            title,
-            desc,
-            isPublished: false,
-            author: {
-              connect: { id: userId },
-            },
-          },
-        },
-        info
-      )
-    },
 
   async updateCookbook(parent, { id, title, desc }, ctx, info) {
     const userId = getUserId(ctx)
@@ -49,8 +19,12 @@ const cookbook = {
     return ctx.db.mutation.updateCookbook(
       {
         where: { id },
-        data: { title, desc },
-      },
+        data: {
+          title,
+          desc,
+          recipe,
+          },
+        },
       info,
     )
   },

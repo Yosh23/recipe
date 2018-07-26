@@ -1,8 +1,8 @@
 const { getUserId } = require('../utils')
 
-const ingredient = {
+const shoppingList = {
   feed(parent, args, ctx, info) {
-    return ctx.db.query.ingredients({ where: { isPublished: true } }, info)
+    return ctx.db.query.shoppingLists({ where: { isPublished: true } }, info)
   },
 
   drafts(parent, args, ctx, info) {
@@ -15,11 +15,11 @@ const ingredient = {
       }
     }
 
-    return ctx.db.query.ingredients({ where }, info)
+    return ctx.db.query.shoppingLists({ where }, info)
   },
 
-  ingredients(parent, { id }, ctx, info) {
-    return ctx.db.query.ingredients({ where: { id } }, info)
+  shoppingLists(parent, args , ctx, info) {
+    return ctx.db.query.shoppingLists({ where: { } }, info)
   },
 
   me(parent, args, ctx, info) {
@@ -28,4 +28,4 @@ const ingredient = {
   },
 }
 
-module.exports = { ingredient }
+module.exports = { shoppingList }

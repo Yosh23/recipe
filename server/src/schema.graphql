@@ -1,28 +1,43 @@
 # import Post from "./generated/prisma.graphql"
 # import ShoppingList from "./generated/prisma.graphql"
 # import Recipe from "./generated/prisma.graphql"
+# import Cookbook from "./generated/prisma.graphql"
+# import Ingredient from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
   drafts: [Post!]!
   post(id: ID!): Post
-  ShoppingList(id: ID!): Shoppinglist
-  recipe(id: ID!): Recipe
+  shoppingList(id: ID!): ShoppingList
+  recipes: [Recipe]
+  ingredient(id: ID!): Ingredient
+  cookbook(id: ID!): Cookbook
   me: User
 }
 
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
-  makeShoppingList(title: String!, ingredients: [String!]!): ShoppingList!
+  ### ShoppingList
+  makeShoppingList(title: String!, ingredients: [ID!]!): ShoppingList!
+  shareShoppingList(id: ID!, title: String!, ingredients: [ID!]!): ShoppingList!
   removeShoppingList(id: ID!): ShoppingList!
-  shareShoppingList(id: ID!): ShoppingList!
+
   login(email: String!, password: String!): AuthPayload!
   createDraft(title: String!, text: String!): Post!
   publish(id: ID!): Post!
   deletePost(id: ID!): Post!
-  createRecipe(title: String!, ingredients: String!, directions: String!): Recipe!
-  editRecipe(id: ID!): Recipe!
+  ### Recipe
+  createRecipe(title: String!, directions: [String!]!): Recipe!
+  editRecipe(id: ID!, title: String!, ingredients: [ID!]!, directions: [String!]!): Recipe!
   removeRecipe(id: ID!): Recipe!
+  ### Ingredient
+  createIngredient(name: String!, kind: IngredientKind!, substitute: String): Ingredient!
+  updateIngredient(id: ID!, name: String!, kind: IngredientKind!, substitute: String): Ingredient!
+  deleteIngredient(id: ID!): Ingredient!
+  ### Cookbook
+  createCookbook(title: String!, desc: String!): Cookbook!
+  updateCookbook(id: ID!, title: String!, desc: String!, author: ID!, recipe: [ID!]!): Cookbook!
+  deleteCookbook(id: ID!): Cookbook!
 }
 
 type Subscription {

@@ -1,50 +1,32 @@
 const { getUserId } = require('../../utils')
 
 const shoppingList = {
-  async makeShoppingList(parent, { title, text }, ctx, info) {
+  async makeShoppingList(parent, { title, ingredients }, ctx, info) {
     const userId = getUserId(ctx)
-    return ctx.db.mutation.createShoppingList(
-      {
-        data: {
-          title,
-          ingredients,
-          isPublished: false,
-          author: {
-            connect: { id: userId },
-          },
-        },
-      },
-      info
-    )
+    return ctx.db.mutation.createShoppingList({data: { title, ingredients }}, info)
   },
 
   async shareShoppingList(parent, { id }, ctx, info) {
     const userId = getUserId(ctx)
-    const postExists = await ctx.db.exists.ShoppingList({
+    const shoppingListExists = await ctx.db.exists.ShoppingList({
       id,
-      author: { id: userId },
     })
-    if (!postExists) {
-      throw new Error(`Post not found or you're not the author`)
+    if (!shoppingListExists) {
+      throw new Error(`Shopping List not found or you're not the author`)
     }
 
-    return ctx.db.mutation.updatePost(
-      {
-        where: { id },
-        data: { isPublished: true },
-      },
-      info,
-    )
+    return ctx.db.mutation.updateShoppingList(
+      {where: { id }, data: { title, ingredients }}, info)
   },
 
   async removeShoppingList(parent, { id }, ctx, info) {
     const userId = getUserId(ctx)
-    const ShoppingListExists = await ctx.db.exists.ShoppingList({
+    const shoppingListExists = await ctx.db.exists.ShoppingList({
       id,
       author: { id: userId },
     })
-    if (!ShoppingListExists) {
-      throw new Error(`Post not found or you're not the author`)
+    if (!shoppingListExists) {
+      throw new Error(`Shopping List not found or you're not the author`)
     }
 
     return ctx.db.mutation.delete({ where: { id } })
