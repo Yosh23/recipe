@@ -3,6 +3,7 @@ const { Cookbooks } = require('./Cookbooks')
 const { Recipe } = require('./Recipe')
 const { Ingredient } = require('./Ingredient')
 const { ShoppingList } = require('./ShoppingList')
+const { basics } = require('./Query')
 /* Adding in C,U,D (Mutation) resolvers */
 const { cudCookbook } = require('./Mutation/cudCookbook')
 const { cudIngred } = require('./Mutation/cudIngred')
@@ -20,6 +21,7 @@ module.exports = {
     ...Ingredient,
     ...ShoppingList,
     ...Recipe,
+    ...basics,
   },
   Mutation: {
     ...auth,
