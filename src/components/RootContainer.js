@@ -19,6 +19,7 @@ import { AUTH_TOKEN } from '../constant'
 import { isTokenExpired } from '../helper/jwtHelper'
 import { graphql } from 'react-apollo'
 import  { gql } from 'apollo-boost'
+import ReadIngredient from './ingredients/ReadIngredient'
 
 const ProtectedRoute = ({ component: Component, token, ...rest }) => {
   return token ? (
@@ -159,6 +160,11 @@ class RootContainer extends Component {
             token={this.state.token}
             path="/drafts"
             component={DraftsPage}
+          />
+          <ProtectedRoute
+            token={this.state.token}
+            path="/drafts"
+            component={ReadIngredient}
           />
           <ProtectedRoute
             token={this.state.token}

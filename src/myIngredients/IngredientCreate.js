@@ -86,9 +86,9 @@ export const CustomSelect = withStyles(styles)(ControlledOpenSelect);
 
 export default class extends Component {
   state = {
-    name: "",
-    kind: "",
-    substitute: ""
+    name: '',
+    kind: '',
+    substitute: ''
   }
   createIngredientMutation = gql`
     mutation createIngredient ($name: String!, $kind: String!, $substitute: String) {
